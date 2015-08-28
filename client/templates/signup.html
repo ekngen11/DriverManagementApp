@@ -6,7 +6,7 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/jumbotron-narrow.css" rel="stylesheet">
     <link href="../css/signup.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
@@ -14,6 +14,7 @@
     <!-- Compiled and minified JavaScript -->
     <script type="text/javascript" src="../js/materialize.min.js"></script>
     <script type="text/javascript" src="../angular/angular.min.js"></script>
+    <link rel="stylesheet" href="../css/materialize.min.css">
     <div class="header">
         <nav>
             <div class="nav-wrapper">
@@ -26,27 +27,65 @@
             </div>
         </nav>
     </div>
-    <form class="form-signin" name="myform" ng-controller="userListCtrl" novalidate>
+    <form class="form-signin" name="myform" ng-controller="userListCtrl" ng-submit="sendForm()" novalidate>
         <p>Email:
             <br>
             <input type="email" placeholder="Email" name="email" ng-model="email" size=50 required>
-            <span style="color:red" ng-show="myform.email.$dirty && myform.email.$invalid">
-  <span ng-show="myform.email.$error.required">Email is required.</span>
-            <span ng-show="myform.email.$error.email">Invalid email address.</span>
-            </span>
+            <span style="color:red" class="error" ng-show="myform.email.$error.required"> Email is required</span>
+            <span style="color:red" class="error" ng-show="myform.email.$error.email">invalid email address</span>
+            </div>
         </p>
         <p>Username:
             <br>
             <input type="text" placeholder="Username" name="username" ng-model="username" required>
+            <span style="color:red" class="error" ng-show="myform.username.$error.required">Username required</span>
         </p>
         <p>Password:
-            <input type="password" placeholder="Password" ng-model="password" size=50 pw-check="confirmpass" required/>
+            <input type="password" placeholder="Password" ng-model="password" size=50 pw-check="password" required/>
         </p>
         <p>Confirm Password:
             <input type="password" placeholder="Confirm Password" ng-model="confirmpass" size=50 required/>
         </p>
-        <a href="post_signup.html" class="waves-effect waves-light btn-large card-panel red lighten-2">Sign Up</a>
+        
+            <button class="btn-large  red lighten-2 waves-effect waves-light" type="submit" name="action">Sign In
+                <i class="material-icons">send</i>
+            </button>
+       
+        <!--
+        <a href="post_signup.html" class="waves-effect waves-light btn-large card-panel red lighten-2">Sign Up</a>-->
     </form>
+    <script>
+    var app = angular.module('signUp', []);
+    app.controller('userListCtrl', function($scope) {
+
+        $scope.sendForm = function() {
+            alert('Successful!');
+        };
+        $scope.getClass = function(b) {
+            return b.toString();
+        }
+        $scope.email = this.email;
+        $scope.$watch('password', function() {
+            $scope.test();
+        });
+        $scope.$watch('confirmpass', function() {
+            $scope.test();
+        });
+        $scope.test = function() {
+            if ($scope.this.password !== $scope.this.confirmpass) {
+                $scope.error = true;
+            } else {
+                $scope.error = false;
+            }
+            if ($scope.edit && (!$scope.fName.length ||
+                    !$scope.lName.length ||
+                    !$scope.passw1.length || !$scope.passw2.length)) {
+                $scope.incomplete = true;
+            }
+
+        };
+    });
+    </script>
     <footer class="footer">
         <p>&copy; Safemotos 2015</p>
     </footer>

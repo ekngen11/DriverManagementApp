@@ -2,6 +2,9 @@ body {
     padding-top: 40px;
     padding-bottom: 40px;
 }
+#submit {
+    width: 20em;  height: 2em;
+}
 
 .form-signin {
     max-width: 330px;
