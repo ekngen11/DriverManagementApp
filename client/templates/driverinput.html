@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Safemotos New Driver Information </title>
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="../css/materialize.min.css">
+    <!-- Compiled and minified JavaScript 
+    <script src="../js/materialize.min.js"></script>-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/materialize.min.js"></script>
+    <script type="text/javascript" src="../js/app.js"></script>
+    <div class="header">
+        <div class="navbar-fixed">
+            <ul id="dropdown2" class="dropdown-content red lighten-2">
+                <li><a href="newdriverinput.html">New Driver Info Form</a></li>
+                <li><a href="#!">New Driver Profiles</a></li>
+                <li class="divider"></li>
+                <li><a href="#!">three</a></li>
+            </ul>
+            <ul id="dropdown1" class="dropdown-content red lighten-2">
+                <li>
+                    <a href="#!">Qualified Driver form</a></li>
+                <li><a href="#!">Live Driver Profiles</a></li>
+                <li class="divider"></li>
+                <li><a href="#!">Drivers in training phase</a></li>
+            </ul>
+            <nav>
+                <div class="nav-wrapper">
+                    <a href="#!" class="brand-logo">Safemotos</a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="#">Home</a></li>
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown2">New Drivers <i class="material-icons right">arrow_drop_down</i></a></li>
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Driver Info<i class="material-icons right">arrow_drop_down</i></a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <p align="center">
+            <font size="20">New Driver Information </font>
+        </p>
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">account_circle</i>
+                        <input id="icon_prefix" type="text" class="validate">
+                        <label for="icon_prefix">First Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="last_name" type="text" class="validate">
+                        <label for="last_name">Last Name</label>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">phone</i>
+                        <input id="icon_telephone" type="tel" class="validate">
+                        <label for="icon_telephone">Telephone</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">perm_identity</i>
+                        <input id="icon_prefix" type="text" class="validate">
+                        <label for="icon_prefix">Ambassador First Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="amb_last_name" type="text" class="validate">
+                        <label for="amb_last_name">Last Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">view_array</i>
+                        <input id="route" type="text" class="validate">
+                        <label for="route">Route</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">my_location</i>
+                        <input id="location" type="text" class="validate">
+                        <label for="location">Main pick up location</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">assessment</i>
+                        <label>English Proficiency</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select class="browser-default">
+                            <option value="" disabled selected>Select level</option>
+                            <option value="novice">Novice </option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                            <option value="native">Native</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">assessment</i>
+                        <input id="experience" type="text" class="validate">
+                        <label for="location">Years of experience</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">assessment</i>
+                        <label>Smartphone exposure</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select class="browser-default">
+                            <option value="" disabled selected>Select level</option>
+                            <option value="novice">Novice </option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                            <option value="native">Expert</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn waves-effect waves-light red lighten-2" type="submit" name="action">Submit
+                        <i class="material-icons">send</i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

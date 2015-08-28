@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+    <title>Safemotos Sign Up</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/jumbotron-narrow.css" rel="stylesheet">
+    <link href="../css/signup.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="../js/materialize.min.js"></script>
+    <script src="../angular/angular.min.js"></script>
+</head>
+
+<body ng-app="signUp">
+    <script src="../js/appController.js"></script>
+    <div class="header">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#!" class="brand-logo">Safemotos</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#">Sass</a></li>
+                    <li><a href="signin.html">Sign In</a></li>
+                    <li class="active"><a href="signup.html">Sign Up</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <form class="form-signin" name="myform" ng-controller="userListCtrl" novalidate>
+        <p>Email:
+            <br>
+            <input type="email" placeholder="Email" name="email" ng-model="email" size=50 required>
+            <span style="color:red" ng-show="myform.email.$dirty && myform.email.$invalid">
+  <span ng-show="myform.email.$error.required">Email is required.</span>
+            <span ng-show="myform.email.$error.email">Invalid email address.</span>
+            </span>
+        </p>
+        <p>Username:
+            <br>
+            <input type="text" placeholder="Username" name="username" ng-model="username" required>
+        </p>
+        <p>Password:
+            <input type="password" placeholder="Password" ng-model="password" size=50 pw-check="confirmpass" required/>
+        </p>
+        <p>Confirm Password:
+            <input type="password" placeholder="Confirm Password" ng-model="confirmpass" size=50 required/>
+        </p>
+        <a href="post_signup.html" class="waves-effect waves-light btn-large card-panel red lighten-2">Sign Up</a>
+    </form>
+    <footer class="footer">
+        <p>&copy; Safemotos 2015</p>
+    </footer>
+</body>
+
+</html>
