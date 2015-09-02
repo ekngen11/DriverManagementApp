@@ -1,3 +1,56 @@
+
+/*
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test3');
+var newdriver_schema = new mongoose.Schema({
+    firstname:String,
+    lastname:String,
+    phone: long,
+    outreach: String,
+    route:String,
+    pickup_location:String,
+    english_level:String,
+    smartphone_exposure: String
+    experience: Number,
+    updated_at : {type:Date, default: Date.now},
+
+});
+
+
+var driver_model = mongoose.model('new_driver',newdriver_schema);
+
+var driver= new driver_model({
+    firstname:"Emmanuel",
+    lastname:"Kipronoh",
+    phone: 3152445558,
+    outreach: "Murakozi",
+    route:"Kayciru",
+    pickup_location: "Top tower hotel",
+    english_level: "Novice",
+    smartphone_exposure:"Expert",
+    experience: 7
+
+});
+
+driver.save(function(err){
+    if (err) console.log(err);
+    else console.log(driver)
+});
+
+
+driver_model.update({
+
+})
+
+
+*/
+
+
+
+
+
+
 var application_root = __dirname,
     express = require("express"),
     path = require("path");
@@ -5,6 +58,7 @@ var databaseUrl = "sampledb"; // "username:password@example.com/mydb"
 var collections = ["things"]
 var db = require("mongojs").connect(databaseUrl, collections);
 var app = express();
+
 
 // Config
 app.configure(function() {
@@ -19,10 +73,10 @@ app.configure(function() {
 });
 
 app.get('/api', function(req, res) {
-    res.send('Ecomm API is running');
+    res.send('API is running');
 });
 
-/*
+
 app.get('/getangularusers', function(req, res) {
     res.header("Access-Control-Allow-Origin", "http://localhost");
     res.header("Access-Control-Allow-Methods", "GET, POST");
@@ -43,7 +97,9 @@ app.get('/getangularusers', function(req, res) {
         }
     });
 });
-*/
+
+
+
 
 app.post('/insertangularmongouser', function(req, res) {
     console.log("POST: ");
@@ -71,3 +127,4 @@ app.post('/insertangularmongouser', function(req, res) {
 });
 
 app.listen(1212)
+

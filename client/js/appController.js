@@ -2,38 +2,46 @@
 
 //var app = angular.module('signUp', []);
 
-var app = angular.module('signUp', []);
+var app = angular.module('myApp', []);
+
 app.controller('userListCtrl', function($scope) {
     $scope.email = this.email;
 });
 
-
 /*
-app.controller('userListCtrl', function($scope) {
-
-    //$scope.username = this.username;
-    $scope.email = this.email;
-
-    $scope.$watch('password', function() {
-        $scope.test();
+app.controller('driverListCtrl', function($scope, $http) {
+    http.get('Enter URL').success(funtion(response) {
+        $scope.names = response. //Something goes here
     });
-    $scope.$watch('confirmpass', function() {
-        $scope.test();
-    });
-    $scope.test = function() {
-        if ($scope.this.password !== $scope.this.confirmpass) {
-            $scope.error = true;
-        } else {
-            $scope.error = false;
-        }
-        if ($scope.edit && (!$scope.fName.length ||
-                !$scope.lName.length ||
-                !$scope.passw1.length || !$scope.passw2.length)) {
-            $scope.incomplete = true;
-        }
+});
+*/
 
+app.controller('liveDriverCtrl',['$scope',function($scope) {
+    $scope.test= "Hello world"
+    $scope.drivers =[{
+        firstname: "Emmanuel",
+        lastname: "Kipronoh"
+    }, {
+        firstname: "Emmanuel",
+        lastname: "Kipronoh"
+    }, {
+        firstname: "Emmanuel",
+        lastname: "Kipronoh"
+    }, {
+        firstname: "Emmanuel",
+        lastname: "Kipronoh"
+    } ];
+
+     var newDrivers=
+
+    $scope.displayNewDrivers=function(){
+
+        $scope.drivers=newDrivers;
     };
-});*/
+
+
+}]);
+
 // Below is the code to allow cross domain request from web server through angular.js
 
 app.config(['$httpProvider', function($httpProvider) {
@@ -46,22 +54,6 @@ app.config(['$httpProvider', function($httpProvider) {
 
 ]);
 
-/*
-myApp.directive('pwCheck', function() {
-    return {
-        require: 'ngModel',
-        ink: function(scope, elem, attrs, ctrl) {
-            scope.$watch(attrs.pwCheck, function(password) {
-                var isValid = ctrl.$viewValue === password;
-                ctrl.$setValidity('pwmatch', isValid);
-            });
-        }
-
-
-    }
-});
-*/
-
 
 
 /*
@@ -69,10 +61,10 @@ Controlllers*/
 
 function userListCtrl($scope, $http, $templateCache) {
     var method = 'POST';
-    var inserturl = 'http://localhost:1212/insertangularmongouser'
+    var inserturl = 'http://localhost' //UNFINISHED
     $scope.codeStatus = "";
     $scope.save = function() {
-        var formData = {
+        $scope.formData = {
             'email': this.email,
             'username': this.username,
             'password': this.password,
@@ -130,22 +122,82 @@ function userListCtrl($scope, $http, $templateCache) {
         return false;
 
     };
+}
 
-    /*
-    $scope.list = function() {
+function newDriverCtrl($scope, $http, $templateCache) {
+    var method = 'POST';
+    var inserturl = 'http://localhost........' //Unfinished
+    $scope.codeStatus = "";
+    $scope.save = function() {
 
-        var url = 'http://localhost:1212/getangularusers'; // URL where the Node.js server is running 
 
-        $http.get(url).success(function(data) {
+        $scope.formData = {
+            $scope.firstname = this.firstname,
+                $scope.lastname = this.lastname,
+                $scope.phone = this.phone,
+                $scope.outreach = this.outreach,
+                $scope.route = this.route,
+                $scope.pickup_location = this.pickup_location,
+                $scope.english_level = this.english_level,
+                $scope.smartphone_exposure = this.smartphone_exposure,
+                $scope.experience = this.experience
 
-            $scope.users = data;
+        };
+        this.lastname = '';
+        this.firstname = '';
+        this.phone = '';
+        this.outreach = '';
+        this.route = '';
+        this.pickup_location = '';
+        this.english_level = '';
+        this.smartphone_exposure = '';
+        this.experience = '';
+
+        var jdata = 'mydata=' + JSON.stringify(formData);
+        $http({ // Accessing the Angular $http Service to send data via REST Communication to Node Server.
+
+            method: method,
+
+            url: inserturl,
+
+            data: jdata,
+
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+
+            cache: $templateCache
+
+        });
+        success(function(response) {
+
+            console.log("success"); // Getting Success Response in Callback
+
+            $scope.codeStatus = response.data;
+
+            console.log($scope.codeStatus);
+
+
 
         });
 
-        // Accessing the Angular $http Service to get data via REST Communication from Node Server
+        error(function(response) {
+
+            console.log("error"); // Getting Error Response in Callback
+
+            $scope.codeStatus = response || "Request failed";
+
+            console.log($scope.codeStatus);
+
+        });
+
+        $scope.list(); // Calling the list function in Angular Controller to show all current data in HTML
+
+        return false;
+
 
     };
-
-    $scope.list();
-    */
 }
+
+
+
