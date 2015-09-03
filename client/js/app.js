@@ -1,11 +1,31 @@
-$(".dropdown-button").dropdown({
-    inDuration: 300,
-    outDuration: 225,
-    constrain_width: false, // Does not change width of dropdown to that of the activator
-    hover: true, // Activate on hover
-    gutter: 0, // Spacing from edge
-    //belowOrigin: false // Displays dropdown below the button
+/*
+$(function() {
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        add: function(e, data) {
+            data.context = $('<button/>').text('Upload')
+                .appendTo(document.body)
+                .click(function() {
+                    data.context = $('<p/>').text('Uploading...').replaceAll($(this));
+                    data.submit();
+                });
+        },
+        done: function(e, data) {
+            data.context.text('Upload finished.');
+        }
+    });
 });
+$('#fileupload').fileupload({
+   
+    progressall: function(e, data) {
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('#progress .bar').css(
+            'width',
+            progress + '%'
+        );
+    }
+});
+*/
 
 $(function() {
     $('#clickme').click(function() {
@@ -26,9 +46,96 @@ $(document).ready(function() {
 
 var app = angular.module('myApp', ["xeditable"]);
 
+// Below is the code to allow cross domain request from web server through angular.js
 
-app.controller('liveDriverCtrl', ['$scope', function($scope) {
-    $scope.test = "Hello world"
+app.config(['$httpProvider', function($httpProvider) {
+
+        $httpProvider.defaults.useXDomain = true;
+
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
+    }
+
+]);
+
+
+
+app.controller('newDriverCtrl', ['$scope', '$http', function($scope, $http) {
+
+    function restItem() {
+        this.lastname = '';
+        this.firstname = '';
+        this.phone = '';
+        this.outreach = '';
+        this.route = '';
+        this.pickup_location = '';
+        this.english_level = '';
+        this.smartphone_exposure = '';
+        this.experience = '';
+    }
+
+
+
+    var formData = [
+
+        $scope.lastname = this.lastname,
+        $scope.phone = this.phone,
+        $scope.outreach = this.outreach,
+        $scope.route = this.route,
+        $scope.pickup_location = this.pickup_location,
+        $scope.english_level = this.english_level,
+        $scope.smartphone_exposure = this.smartphone_exposure,
+        $scope.experience = this.experience,
+        $scope.firstname = this.firstname
+
+    ];
+
+    resetItem();
+
+
+    var jdata = 'mydata=' + JSON.stringify(formData);
+
+    $scope.submitForm = function() {
+        var driv = $scope.driver;
+
+        var url = 'http://localhost..'; // URL where the Node.js server is running ---UNFINISHED
+        $http.get(url).success(function(data) {
+            $scope.items.push(data);
+        }).
+
+        error(function(data, status, headers, config) {
+            alert(data.summary);
+        });
+
+    };
+
+
+
+    $scope.removeItem = function(data) {
+        if (confirm('Do you really want to delete this?')) {
+            $http['delete']('/driver/' + data.id).success(function() {
+                $scope.items.splice($scope.items.indexOf(data), 1);
+            });
+        }
+    };
+
+    $http.get('/employee/find').success(function(data) {
+        for (var i = 0; i < data.length; i++) {
+            data[i].index = i;
+        }
+
+        $scope.items = data;
+    });
+
+
+}]);
+
+
+
+
+
+
+app.controller('driversCtrl', ['$scope', '$http', function($scope, $http) {
 
 
     $scope.drivers = [];
@@ -75,7 +182,7 @@ app.controller('liveDriverCtrl', ['$scope', function($scope) {
         lastname: "Barrett"
     }];
 
-    $scope.infor = [{
+    $scope.driver = {
         firstname: "Emmanuel",
         lastname: "Kipronoh",
         phone: "+250784311101",
@@ -84,7 +191,7 @@ app.controller('liveDriverCtrl', ['$scope', function($scope) {
         experience: "7",
         route: "kayciru to town",
         outreach: "Peter Kareoke"
-    }];
+    };
 
     $scope.displayNewDrivers = function() {
 
@@ -101,106 +208,15 @@ app.controller('liveDriverCtrl', ['$scope', function($scope) {
         $scope.drivers = newDrivers;
     };
 
+
+    /*
+    $scope.updateItem = function(data) {
+
+        $scope.driver = data;
+
+
+    }*/
+
+
+
 }]);
-
-// Below is the code to allow cross domain request from web server through angular.js
-
-app.config(['$httpProvider', function($httpProvider) {
-
-        $httpProvider.defaults.useXDomain = tsxxrue;
-
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
-
-    }
-
-]);
-
-function newDriverCtrl($scope, $http, $templateCache) {
-    var method = 'POST';
-    var inserturl = 'http://localhost........' //Unfinished
-    $scope.codeStatus = "";
-    $scope.save = function() {
-        var formData = {
-            $scope.firstname = this.firstname,
-                $scope.lastname = this.lastname,
-                $scope.phone = this.phone,
-                $scope.outreach = this.outreach,
-                $scope.route = this.route,
-                $scope.pickup_location = this.pickup_location,
-                $scope.english_level = this.english_level,
-                $scope.smartphone_exposure = this.smartphone_exposure,
-                $scope.experience = this.experience
-
-        };
-        this.lastname = '';
-        this.firstname = '';
-        this.phone = '';
-        this.outreach = '';
-        this.route = '';
-        this.pickup_location = '';
-        this.english_level = '';
-        this.smartphone_exposure = '';
-        this.experience = '';
-
-        var jdata = 'mydata=' + JSON.stringify(formData);
-        $http({ // Accessing the Angular $http Service to send data via REST Communication to Node Server.
-
-            method: method,
-
-            url: inserturl,
-
-            data: jdata,
-
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-
-            cache: $templateCache
-
-        });
-        success(function(response) {
-
-            console.log("success"); // Getting Success Response in Callback
-
-            $scope.codeStatus = response.data;
-
-            console.log($scope.codeStatus);
-
-
-
-        });
-
-        error(function(response) {
-
-            console.log("error"); // Getting Error Response in Callback
-
-            $scope.codeStatus = response || "Request failed";
-
-            console.log($scope.codeStatus);
-
-        });
-
-        $scope.list(); // Calling the list function in Angular Controller to show all current data in HTML
-
-        $scope.list = function() {
-
-            var url = 'http://localhost..'; // URL where the Node.js server is running ---UNFINISHED
-
-            $http.get(url).success(function(data) {
-
-                $scope.users = data;
-
-            });
-
-            // Accessing the Angular $http Service to get data via REST Communication from Node Server
-
-        };
-
-        $scope.list();
-
-
-        return false;
-
-
-    };
-}
