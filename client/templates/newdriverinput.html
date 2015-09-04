@@ -59,11 +59,11 @@
                 <div class="row">
                     <div class="input-field col s6">
                         <i class="material-icons prefix">account_circle</i>
-                        <input id="firstname" ng-model= "firstname"type="text" class="validate">
+                        <input id="firstname" ng-model= "driver.firstname"type="text" class="validate">
                         <label for="icon_prefix">First Name</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="lastname" ng-model = "lastname" type="text" class="validate">
+                        <input id="lastname" ng-model = "driver.lastname" type="text" class="validate">
                         <label for="last_name">Last Name</label>
                     </div>
 
@@ -71,7 +71,7 @@
                 <div class='row'>
                     <div class="input-field col s6">
                         <i class="material-icons prefix">phone</i>
-                        <input id="phone" ng-model ="phone" type="text" class="validate">
+                        <input id="phone" ng-model ="driver.phone" type="text" class="validate">
                         <label for="icon_telephone">Telephone</label>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12" ng-controller="driverListCtrl">
-                        <select class="browser-default" ng-model="outreach">
+                        <select class="browser-default" ng-model="driver.outreach">
                             <optgroup label="Social media">
                                 <option value="facebook">Facebook</option>
                                 <option value="twitter">Twitter</option>
@@ -112,7 +112,7 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">my_location</i>
-                        <input id="pickup_location" ng-model="pickup_location" type="text" class="validate">
+                        <input id="pickup_location" ng-model="driver.pickup_location" type="text" class="validate">
                         <label for="location">Main pick up location</label>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <select class="browser-default" ng-model="english_level">
+                        <select class="browser-default" ng-model="driver.english_level">
                             <option value="" disabled selected>Select level</option>
                             <option value="novice">Novice </option>
                             <option value="intermediate">Intermediate</option>
@@ -136,7 +136,7 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">assessment</i>
-                        <input ng-model = "experience" id="experience" type="text" class="validate">
+                        <input ng-model = "driver.experience" id="experience" type="text" class="validate">
                         <label for="location">Years of experience</label>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <select class="browser-default" ng-model = "smartphone_exposure">
+                        <select class="browser-default" ng-model = "driver.smartphone_exposure">
                             <option value="" disabled selected>Select level</option>
                             <option value="novice">Novice </option>
                             <option value="intermediate">Intermediate</option>

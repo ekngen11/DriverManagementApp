@@ -25,7 +25,13 @@ $('#fileupload').fileupload({
         );
     }
 });
+
+
+function myFunction() {
+    alert("I am an alert box!");
+}
 */
+
 
 $(function() {
     $('#clickme').click(function() {
@@ -44,6 +50,14 @@ $(document).ready(function() {
 });
 
 
+myShortList = [
+    'New Drivers',
+    'Qualified new drivers',
+    'Live Drivers',
+    'Drivers in Training Phase'
+]
+
+
 var app = angular.module('myApp', ["xeditable"]);
 
 // Below is the code to allow cross domain request from web server through angular.js
@@ -58,74 +72,102 @@ app.config(['$httpProvider', function($httpProvider) {
 
 ]);
 
+app.factory('driver', ['$http', function($http) {
+    function driver(driverData) {
+        if (driverData) {
+            this.setData(driverData);
+        }
+    }
+
+    driver.prototype = {
+        setData: function(driverData) {
+            angular.extend(this, driverData);
+        },
+        load: function(id) {
+            var scope = this;
+            $http.get('ourserver/drivers/' + driverId).success(function(data) {
+                scope.setData(driverData);
+            });
+
+        },
+
+        delete:function(){
+            $http.delete("ourserver/drivers/" + driverId);
+
+        },
+        update: function(){
+            $http.put('ourserver/drivers'+ driverId, this);
+        },
+        getImageUrl: function (width,height){
+            return "our/image/service"+this.driver.id
+        }
+    }
+
+}]);
+
 
 
 app.controller('newDriverCtrl', ['$scope', '$http', function($scope, $http) {
 
-    function restItem() {
-        this.lastname = '';
-        this.firstname = '';
-        this.phone = '';
-        this.outreach = '';
-        this.route = '';
-        this.pickup_location = '';
-        this.english_level = '';
-        this.smartphone_exposure = '';
-        this.experience = '';
+
+    $scope.driver = {
+        lastname: $scope.lastname,
+        phone: $scope.phone,
+        outreach: $scope.outreach,
+        route: $scope.route,
+        pickup_location: $scope.pickup_location,
+        english_level: $scope.english_level,
+        smartphone_exposure: $scope.smartphone_exposure,
+        experience: $scope.experience,
+        firstname: $scope.firstname
+
     }
 
+    $scope.driverData = [];
 
 
-    var formData = [
-
-        $scope.lastname = this.lastname,
-        $scope.phone = this.phone,
-        $scope.outreach = this.outreach,
-        $scope.route = this.route,
-        $scope.pickup_location = this.pickup_location,
-        $scope.english_level = this.english_level,
-        $scope.smartphone_exposure = this.smartphone_exposure,
-        $scope.experience = this.experience,
-        $scope.firstname = this.firstname
-
-    ];
+    function restItem() {
+        $scope.lastname = '';
+        $scope.firstname = '';
+        $scope.phone = '';
+        $scope.outreach = '';
+        $scope.route = '';
+        $scope.pickup_location = '';
+        $scope.english_level = '';
+        $scope.smartphone_exposure = '';
+        $scope.experience = '';
+    }
 
     resetItem();
 
-
-    var jdata = 'mydata=' + JSON.stringify(formData);
+    //var jdata = 'mydata=' + JSON.stringify(formData);
 
     $scope.submitForm = function() {
+
         var driv = $scope.driver;
-
-        var url = 'http://localhost..'; // URL where the Node.js server is running ---UNFINISHED
-        $http.get(url).success(function(data) {
-            $scope.items.push(data);
-        }).
-
-        error(function(data, status, headers, config) {
-            alert(data.summary);
-        });
+        $http.put("ourserver/drivers" + driverId, $scope.driver);
 
     };
 
-
-
-    $scope.removeItem = function(data) {
+    $scope.removeDriver = function(data) {
         if (confirm('Do you really want to delete this?')) {
-            $http['delete']('/driver/' + data.id).success(function() {
-                $scope.items.splice($scope.items.indexOf(data), 1);
+            $http['delete']('ourserver/drivers/' + data.id).success(function() {
+                $scope.driver.splice($scope.driver.indexOf(data), 1);
             });
         }
     };
 
-    $http.get('/employee/find').success(function(data) {
-        for (var i = 0; i < data.length; i++) {
-            data[i].index = i;
-        }
+    $scope.updateDriver = function() {
+        $http.put("ourserver/drivers" + driverId, $scope.driver);
+    }
 
-        $scope.items = data;
-    });
+    $scope.getDriverInfo = function() {
+        $http.get('ourserver/drivers/' + driverId).success(function(data) {
+            $scope.driverData.push(data);
+        });
+    }
+
+
 
 
 }]);
@@ -138,6 +180,39 @@ app.controller('newDriverCtrl', ['$scope', '$http', function($scope, $http) {
 app.controller('driversCtrl', ['$scope', '$http', function($scope, $http) {
 
 
+    $scope.shortlists = myShortList;
+
+    $scope.shortlist = {
+        shortlists: ['Liver Drivers']
+    };
+
+    $scope.checkAll = function() {
+        $scope.shortlist.shortlists = angular.copy($scope.shortlists);
+    };
+
+    $scope.getShortlists = function() {
+        return $scope.shortlist.shortlists;
+    }
+
+    $scope.addShortlist = function() {
+        listName = prompt("Enter name of new Shortlist");
+        myShortList.push(listName);
+    }
+
+
+    /*
+    $scope.check = function(value, checked) {
+        var idx = $scope.shortlist.shortlists.indexOf(value);
+        if (idx >= 0 && !checked) {
+            $scope.shortlist.shortlists.splice(idx, 1);
+        }
+
+        if (idx < 0 && checked) {
+            $scope.shortlist.shortlists.push(value);
+        }
+    };*/
+
+    /*
     $scope.drivers = [];
 
     var newDrivers = [{
@@ -207,6 +282,17 @@ app.controller('driversCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.displayTrainees = function() {
         $scope.drivers = newDrivers;
     };
+    /*
+    $scope.myFunction = function() {
+        alert("I am an alert box!");
+        $('#v').click(function() {
+
+            var r = $('<input type="button" value="new button"/>');
+
+            $("#myCollection").append(r);
+        });
+    };*/
+
 
 
     /*
