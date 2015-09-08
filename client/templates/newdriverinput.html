@@ -21,6 +21,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="../js/materialize.min.js"></script>
     <script type="text/javascript" src="../js/app.js"></script>
+    <script type="text/javascript" src="../js/controllers.js"></script>
     <div class="header">
         <div class="navbar-fixed">
             <ul id="dropdown2" class="dropdown-content red lighten-2">
@@ -75,9 +76,16 @@
                         <label for="icon_telephone">Telephone</label>
                     </div>
                 </div>
+                <div class='row'>
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">perm_identity</i>
+                        <input name="id" type="number" class="validate" ng-model="driver.id">
+                        <label for="id">ID Number</label>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <i class="material-icons prefix">perm_identity</i>
+                        <i class="material-icons prefix">hearing</i>
                         <label>How did driver hear about Safemotos?</label>
                     </div>
                 </div>

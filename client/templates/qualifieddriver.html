@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="../css/materialize.min.css">
+    <link rel="stylesheet" href="../css/app.css">
     <!-- Compiled and minified JavaScript 
     <script src="../js/materialize.min.js"></script>-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -18,7 +19,8 @@
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="../js/materialize.min.js"></script>
-    
+    <script src="../ng-file-upload/ng-file-upload.min.js"></script>
+    <script type="text/javascript" src="../js/controllers.js"></script>
     <div class="header">
         <div class="navbar-fixed">
             <nav>
@@ -39,34 +41,41 @@
             <font size="20">Qualified Driver Information </font>
         </p>
         <div class="row">
-            <form class="col s12">
+            <form class="col s12" name="myForm">
                 <div class="row">
                     <div class="input-field col s6">
                         <i class="material-icons prefix">account_circle</i>
-                        <input id="icon_prefix" ng-model = "firstname" type="text" class="validate">
+                        <input name="firstname" ng-model="driver.firstname" type="text" class="validate">
                         <label for="icon_prefix">First Name</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="last_name" ng-model ="lastname" type="text" class="validate">
-                        <label for="last_name">Last Name</label>
+                        <input name="lastname" ng-model="driver.lastname" type="text" class="validate">
+                        <label for="lastname">Last Name</label>
                     </div>
                 </div>
                 <div class='row'>
                     <div class="input-field col s6">
                         <i class="material-icons prefix">phone</i>
-                        <input id="icon_telephone" type="tel" class="validate">
-                        <label for="icon_telephone">Telephone</label>
+                        <input name="phone" type="tel" class="validate" ng-model="driver.phone">
+                        <label for="telephone">Telephone</label>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">perm_identity</i>
+                        <input name="id" type="number" class="validate" ng-model="driver.id">
+                        <label for="id">ID Number</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">perm_identity</i>
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">hearing</i>
                         <label>How did driver hear about Safemotos?</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12">
-                        <select class="browser-default" ng-model="outreach">
+                    <div class="input-field col s6">
+                        <select class="browser-default" name="outreach" ng-model="driver.outreach">
                             <optgroup label="Social media">
                                 <option value="facebook">Facebook</option>
                                 <option value="twitter">Twitter</option>
@@ -86,14 +95,14 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">view_array</i>
-                        <input id="route" ng-model="route" type="text" class="validate">
+                        <input name="route" ng-model="driver.route" type="text" class="validate">
                         <label for="route">Route</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">my_location</i>
-                        <input id="location" ng-model="pickup_location" type="text" class="validate">
+                        <input name="location" ng-model="driver.pickup_location" type="text" class="validate">
                         <label for="location">Main pick up location</label>
                     </div>
                 </div>
@@ -105,7 +114,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <select class="browser-default">
+                        <select class="browser-default" name="english_level" ng-model="driver.english_level">
                             <option value="" disabled selected>Select level</option>
                             <option value="novice">Novice </option>
                             <option value="intermediate">Intermediate</option>
@@ -115,9 +124,9 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12">
+                    <div class="input-field col s6">
                         <i class="material-icons prefix">assessment</i>
-                        <input id="experience" type="number" class="validate">
+                        <input type="number" class="validate" name="experience" ng-model="driver.experience">
                         <label for="location">Years of experience</label>
                     </div>
                 </div>
@@ -129,7 +138,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <select class="browser-default">
+                        <select class="browser-default" name="smartphone_exposure" ng-model="driver.smartphone_exposure">
                             <option value="" disabled selected>Select level</option>
                             <option value="novice">Novice </option>
                             <option value="intermediate">Intermediate</option>
@@ -140,44 +149,51 @@
                 </div>
                 <div class="row">
                     <div class=" col s12">
-                        <i class="material-icons prefix">open_in_browser</i>
-                        <input type="file" id="file" name="file" />
-                        <button ng-click="add()">Add</button>
-                        <label style="font-size: 15pt">Upload Driver's licence</label>
+                        <input type="file" ngf-select ng-model="license" name="license" accept="image/*" ngf-max-size="4MB" required>
+                        <i ng-show="myForm.file.$error.required">*required</i>
+                        <br>
+                        <img ng-show="myForm.file.$valid" ngf-src="!license.$error && license" class="thumb">
+                        <label>Upload Driver's license</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class=" col s12">
+                        <!--
                         <i class="material-icons prefix">open_in_browser</i>
-                        <input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple>
+                        <input type="file" file-model="myFile"/>
                         <button ng-click="add()">Add</button>
-                        <label style="font-size: 15pt">Upload copy of Yellow Card</label>
-                    </div>
-                    <div id="progress">
-                        <div class="bar" style="width: 0%;"></div>
+                        <label style="font-size: 15pt">Upload copy of Yellow Card</label>-->
+                        <input type="file" ngf-select ng-model="yellow_card" name="yellow_card" accept="image/*" ngf-max-size="4MB" required>
+                        <i ng-show="myForm.file.$error.required">*required</i>
+                        <br>
+                        <img ng-show="myForm.file.$valid" ngf-src="!yellow_card.$error && yellow_card" class="thumb">
+                        <label>Upload yellow</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class=" col s12">
-                        <i class="material-icons prefix">open_in_browser</i>
-                        <input type="file" id="file" name="file" />
-                        <button ng-click="add()">Add</button>
-                        <label style="font-size: 15pt">Upload ID card</label>
+                        <input type="file" ngf-select ng-model="national_id" name="national_id" accept="image/*" ngf-max-size="4MB" required>
+                        <i ng-show="myForm.file.$error.required">*required</i>
+                        <br>
+                        <img ng-show="myForm.file.$valid" ngf-src="!national_id.$error && national_id" class="thumb">
+                        <label>Upload ID card</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class=" col s12">
-                        <i class="material-icons prefix">open_in_browser</i>
-                        <input type="file" id="file" name="file" />
-                        <button ng-click="add()">Add</button>
-                        <label style="font-size: 15pt">Upload copy of contract</label>
+                        <input type="file" ngf-select ng-model="contract" name="contract" accept="image/*" ngf-max-size="4MB" required>
+                        <i ng-show="myForm.file.$error.required">*required</i>
+                        <br>
+                        <img ng-show="myForm.file.$valid" ngf-src="!contract.$error && contract" class="thumb">
+                        <label>Upload copy of contract</label>
                     </div>
                 </div>
                 <div class="row">
-                    <button class="btn waves-effect waves-light red lighten-2" ng-click="submitForm()" type="submit" name="action">Submit
+                    <button class="btn waves-effect waves-light red lighten-2" ng-click="submit()" type="submit" name="action">Submit
                         <i class="material-icons">send</i>
                     </button>
                 </div>
+
             </form>
         </div>
     </div>
