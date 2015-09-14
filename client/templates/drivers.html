@@ -72,7 +72,6 @@
                 </li>
             </ul>
         </div>
-
         <div class="row">
             <div class="col s12 m8 l6 ">
                 <div class="card large">
@@ -86,22 +85,35 @@
                         <p> Experience in years : {{driverInfo.experience}}</p>
                     </div>
                     <div class="card-reveal">
-                        <span editable-text="{driver.firstname + " "+driver.lastname}}" class="card-title activator grey-text text-darken-4"> Name: {{driverInfo.firstname + " "+driverInfo.lastname}} <i class="material-icons right">close</i></span>
+                        <span editable-text="{driverInfo.firstname + " "+driverInfo.lastname}}" class="card-title activator grey-text text-darken-4"> Name: {{driverInfo.firstname + " "+driverInfo.lastname}} <i class="material-icons right">close</i></span>
                         <label class="label">Phone Number:</label>
-                        <div editable-text="driver.phone">{{driverInfo.phone}}</div>
+                        <div editable-text="driverInfo.phone">{{driverInfo.phone}}</div>
                         <label class="label">Main Route:</label>
-                        <div editable-text="driver.route">{{driverInfo.route}}</div>
+                        <div editable-text="driverInfo.route">{{driverInfo.route}}</div>
                         <label class="label">Main pick up Location:</label>
-                        <div editable-text="driver.pickup_location">{{driverInfo.pickup_location}}</div>
+                        <div editable-text="driverInfo.pickup_location">{{driverInfo.pickup_location}}</div>
                         <label class="label">English Proficiency:</label>
-                        <div editable-text="driver.english_level">{{driverInfo.english_level}}</div>
+                        <div editable-text="driverInfo.english_level">{{driverInfo.english_level}}</div>
                         <label class="label">Experience in Years:</label>
-                        <div editable-text="driver.experience">{{driverInfo.experience}}</div>
+                        <div editable-text="driverInfo.experience">{{driverInfo.experience}}</div>
                         <label class="label">How driver heard about safemotos:</label>
-                        <div editable-text="driver.outreach">{{driverInfo.outreach}}</div>
+                        <div editable-text="driverInfo.outreach">{{driverInfo.outreach}}</div>
                         <label class="label">Driver status:</label>
-                        <div editable-text="driver.status">{{driverInfo.status}}</div>
-                        <p><a href="#">Driver's License</a></p>
+                        <div editable-text="driverInfo.status">{{driverInfo.status}}</div>
+                        <div>
+                            <p><a href="#">Driver's License</a>
+                                <button onclick="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">Update</button>
+                            </p>
+                            <div id="light" class="white_content">Upload document. <a href="javascript:void(0)" onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close</a>
+                            
+                                <input type="file" ngf-select ng-model="national_id" name="national_id" accept="image/*" ngf-max-size="4MB" required>
+                                <i ng-show="myForm.file.$error.required">*required</i>
+                                <br>
+                                <img ng-show="myForm.file.$valid" ngf-src="!national_id.$error && national_id" class="thumb">
+
+                            </div>
+                            <div id="fade" class="black_overlay"></div>
+                        </div>
                         <p><a href="#">Yellow Card</a></p>
                         <p><a href="#">Copy of ID card</a></p>
                         <p><a href="#">Copy of Signed Contract</a></p>
